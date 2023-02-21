@@ -16,14 +16,18 @@ import { markdownToHtml } from "@/utils/markdownToHtml";
 import { reactive } from "vue";
 import MenuList from "./LeftMenu/MenuList.vue";
 
+const basePath = import.meta.env.PROD
+  ? `${import.meta.env.BASE_URL}/files`
+  : "/files";
+
 const state = reactive({
   html: "",
 });
-state.html = (await markdownToHtml("/files/intro.md")) || "";
+state.html = (await markdownToHtml(`${basePath}/intro.md`)) || "";
 
 const handleMenuClick = async (menu: Directory) => {
   if (menu.link) {
-    state.html = (await markdownToHtml(`/files/${menu.link}`)) || "";
+    state.html = (await markdownToHtml(`${basePath}/${menu.link}`)) || "";
   }
 };
 </script>
